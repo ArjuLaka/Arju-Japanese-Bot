@@ -36,7 +36,7 @@ client.once('ready', () => {
     sendKanji.then(kanjiMessage => {
       const channel = client.channels.cache.get(channelId);
       if (channel) {
-        channel.send("# JKW").then(() => {
+        channel.send(kanjiMessage).then(() => {
           console.log("pesan berhasil dikirim")
         }).catch(console.error)
       } else {
