@@ -1,0 +1,1 @@
+//command to get kanji detail
