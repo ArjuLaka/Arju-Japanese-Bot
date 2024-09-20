@@ -16,9 +16,10 @@ const client = new Client({
 
 client.once('ready', () => {
   const channelId = process.env.CHANNEL_ID;
-  
-  schedule.scheduleJob('50 18 * * *', () => {
-    let sendKanji = getKanji();
+
+  //Setiap jam 9 Pagi
+  schedule.scheduleJob('0 9 * * *', () => {
+    let sendKanji = getKanji(0);
     sendKanji.then(kanjiMessage => {
       const channel = client.channels.cache.get(channelId);
       if (channel) {
@@ -31,8 +32,9 @@ client.once('ready', () => {
     })
   })
   
-  schedule.scheduleJob('0 19 * * *', () => {
-    let sendKanji = getKanji();
+  //Setiap jam 3 Sore
+  schedule.scheduleJob('0 15 * * *', () => {
+    let sendKanji = getKanji(1);
     sendKanji.then(kanjiMessage => {
       const channel = client.channels.cache.get(channelId);
       if (channel) {
@@ -46,9 +48,9 @@ client.once('ready', () => {
   })
 })
 
-async function getKanji() {
+async function getKanji(kanjiClass) {
   try {
-    let kanji = await scrapeKanji();
+    let kanji = await scrapeKanji(kanjiClass);
     let detailData = await fetchDetail(kanji);
     let finalData = `
     # ${detailData.kanji}
